@@ -1,0 +1,50 @@
+<div class="to-do-container">
+    <h1 class="display-2">Family to-do lists</h1>
+
+    <div class="btn-group" role="group" aria-label="Sort tasks" id="sortingBtns">
+        <input type="radio" class="btn-check" (click)="sortByAssignee()"  name="btnradio" id="btnradio1" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="btnradio1">By assignee</label>
+
+        <input type="radio" class="btn-check" (click)="sortByType()"  name="btnradio" id="btnradio2" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio2">By type</label>
+
+    </div>
+
+    <div *ngIf="showByType" id="showByType" class="list-group">
+        <h2>Daily Tasks</h2>
+        <div *ngFor="let dailyTask of dailyTasks">
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ dailyTask.title }}</h5>
+                </div>
+                <p class="mb-1">{{ dailyTask.description }}</p>
+                <small class="text-muted">{{ dailyTask.assignee }}</small>
+            </a>
+        </div>
+        <h2>Weekly Tasks</h2>
+        <div *ngFor="let weeklyTask of weeklyTasks">
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ weeklyTask.title }}</h5>
+                </div>
+                <p class="mb-1">{{ weeklyTask.description }}</p>
+                <small class="text-muted">{{ weeklyTask.assignee }}</small>
+            </a>
+        </div>
+    </div>
+
+    <div *ngIf="showByAssignee">
+        <div *ngFor="let recipient of getKeys(taskByAssignee)" id="personGroup">
+            <h2>{{ recipient }}</h2>
+            <div *ngFor="let task of getAssigneeTasksInLists(recipient.toString())">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ task.title }}</h5>
+                    </div>
+                    <p class="mb-1">{{ task.description }}</p>
+                    <small class="text-muted">Type: {{ task.type }}</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
